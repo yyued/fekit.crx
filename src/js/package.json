@@ -1,0 +1,20 @@
+{
+  "name": "fekit-crx-lib",
+  "version": "1.0.0",
+  "description": "fekit's node_modules",
+  "repository": {},
+  "author": "adi",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "clean-css": "~3.2.9",
+    "jquery": "~2.1.4",
+    "js-beautify": "~1.5.6",
+    "lodash": "~3.9.3",
+    "multiline": "~1.0.2",
+    "mustache": "~2.1.0",
+    "qr-image": "~3.1.0",
+    "uglify-js": "~2.4.23"
+  }
+}

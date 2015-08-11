@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> demo </title>
+    <link href="css/typo.css" rel="stylesheet">
+    <link href="css/fekit.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="Nav">
+    <div class="group">
+        <div class="group__name">ui</div>
+        <div class="group__list">
+            <div class="group__item -active" data-path="ui">UI</div>
+        </div>
+    </div>
+    <div class="group">
+        <div class="group__name">编码解码</div>
+        <div class="group__list">
+            <div class="group__item" data-path="base64-encoder">url</div>
+            <div class="group__item " data-path="base64-encoder">base64</div>
+            <div class="group__item" data-path="base64-encoder">QRCode</div>
+        </div>
+    </div>
+    <div class="group">
+        <div class="group__name">校验</div>
+        <div class="group__list">
+            <div class="group__item" data-path="base64-encoder">JSON</div>
+            <div class="group__item" data-path="base64-encoder">RegExp</div>
+        </div>
+    </div>
+</div>
+
+<div class="Main">
+    <iframe id="targetPage" src="biz/base64-encoder/index.html" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+</div>
+    
+<script src="js/lib/node_modules.js"></script>
+<script src="js/menuData.js"></script>
+<script src="js/main.js"></script> 
+</body>
+
+</html>

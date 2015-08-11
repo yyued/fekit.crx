@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> UI demo </title>
+    <link href="../../css/typo.css" rel="stylesheet">
+    <link href="../../css/fekit.css" rel="stylesheet">
+</head>
+
+<body class="fekit">
+
+<h1>Base64 编码/解码</h1>
+<p>正文</p>
+
+<ul>
+	<li>' 替换成 <code>&</code><code>apos;</code></li>
+	<li>" 替换成 <code>&</code><code>quot;</code></li>
+	<li>& 替换成 <code>&</code><code>amp;</code></li>
+	<li>< 替换成 <code>&</code><code>lt;</code></li>
+	<li>> 替换成 <code>&</code><code>gt;</code></li>
+</ul>
+
+<!-- demo start -->
+
+<form action="" id="in" target="anonymous" method="post">
+	<h4>输入1：</h4>
+	<input name="url" type="text" placeholder="" >
+
+	<h4>输入2：</h4>
+	<textarea name="raw" id="" cols="50" rows="5"></textarea>
+
+	<h4>配置项组1：</h4>
+	<div>
+		<input id="option11" type="checkbox" checked>
+		<label for="option11">是否区分大小写</label>
+	</div>
+	<div>
+		<input id="option12" type="checkbox" checked>
+		<label for="option12">是否匹配多行</label>
+	</div>
+	<div>
+		<input id="option13" type="checkbox" >
+		<label for="option13">是否匹配全局</label>
+	</div>
+
+	<h4>配置项组2：</h4>
+	<label><input name="option21" type="radio" checked> 是</label>
+	<label><input name="option21" type="radio" > 否</label>
+
+	<h4>配置项组3：</h4>
+	<select name="option31" id="option31">
+		<option value="2" selected>缩进2个空格</option>
+		<option value="4">缩进4个空格</option>
+	</select>
+
+	<div class="btn">确定按钮</div>
+
+</form>
+
+
+<div id="out"></div>
+
+<!-- demo end -->
+
+<script src="http://assets.dwstatic.com/common/js/jquery.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> UI demo </title>
+    <link href="../../css/typo.css" rel="stylesheet">
+    <link href="../../css/fekit.css" rel="stylesheet">
+    <style>
+        .form-wrap{border-radius: 3px; background-color: #f1f1f1; padding: 20px; border:1px solid #999;}
+        
+        #out{max-height: 150px; overflow: auto;}
+        .lebel-group{padding: 8px 18px;margin:0 5px; cursor: pointer;}
+        .lebel-group input{margin-right: 4px;}
+        b{background-color: red;}
+        input[name="regexp"]{width: 80%; margin-right: 20%; margin-bottom: 10px;}
+    </style>
+</head>
+
+<body class="fekit">
+
+<h1>正则匹配器</h1>
+
+
+<div class="form-wrap">
+    <form action="" id="in" target="anonymous" method="post">
+
+        <div class="uiTxt">字符串拷贝到这里</div>
+        <textarea name="inputString" id="" cols="50" rows="5"></textarea>
+
+        <div class="uiTxt">输入正则表达式</div>
+        <input name="regexp" type="text" class="form-control" placeholder="" >
+
+        <label class="lebel-group">
+            <input type="checkbox" name="args" value="i">i</input>
+        </label>
+        <label class="lebel-group">
+            <input type="checkbox" name="args" value="m">m</input>
+        </label>
+
+    </form>
+</div>
+
+<div id="out" contenteditable=""></div>
+
+
+<script src="../../js/lib/node_modules.js"></script>
+<script src="index.js"></script>
+</body>
+
+</html>

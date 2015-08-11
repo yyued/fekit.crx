@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> UI demo </title>
+    <link href="../../css/typo.css" rel="stylesheet">
+    <link href="../../css/fekit.css" rel="stylesheet">
+    <style>
+        .form-wrap{border-radius: 3px; background-color: #f1f1f1; padding: 20px; border:1px solid #999; -webkit-user-select:none;}
+
+        b{background-color: red;}
+
+        .color-picker{position: absolute;top: 0px;left: 280px;}
+
+    </style>
+</head>
+
+<body class="fekit">
+
+<h1>背景透明代码</h1>
+
+
+<div class="form-wrap">
+    <form action="" id="in" target="anonymous" method="post">
+        <div class="form__item">
+            <label for="selector">选择器</label>
+            <input id="selector" name="selector" type="text" value=".bg">
+        </div>
+        <div class="form__item " style="position:relative;">
+            <label for="color">颜色值</label>
+            <input id="color" name="color" type="text" value="#fff">
+            <input type="text" class="color {valueElement:'color'}" style="width:26px;height:26px;display:inline-block;vertical-align:top; cursor:pointer" readonly>
+        </div>
+        <div class="form__item">
+            <label for="opacity">透明度</label>
+            <input name="opacityView" type="text" value="0.5" style="width:50px;">
+            <input id="opacity" name="opacity" type="range" min="0" max="1" step="0.01" value="0.5" style="vertical-align:middle;">
+        </div>
+        
+        <button id="copy" style="margin-top:10px;"> 复制代码 </button>
+    </form>
+</div>
+
+<textarea id="out" cols="30" rows="10" ></textarea>
+
+
+<script src="../../js/lib/node_modules.js"></script>
+<script type="text/javascript" src="../../js/lib/jscolor/jscolor.js"></script>
+<script src="index.js"></script>
+</body>
+
+</html>

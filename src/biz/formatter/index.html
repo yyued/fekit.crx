@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> UI demo </title>
+    <link href="../../css/typo.css" rel="stylesheet">
+    <link href="../../css/fekit.css" rel="stylesheet">
+    <style>
+		.form-wrap{border-radius: 3px; background-color: #f1f1f1; padding: 20px; border:1px solid #999;}
+
+		#dropbox{ overflow: auto;}
+		#dropbox img{width: 100%; vertical-align: top; }
+    </style>
+</head>
+
+<body class="fekit">
+
+<h1> html/css/js 格式化</h1>
+
+
+<div class="form-wrap">
+<form action="" id="in" target="anonymous" method="post">
+
+	<h3>选择文件类型</h3>
+	<label><input name="fileType" type="radio" value="text/html" > html</label>
+	<label><input name="fileType" type="radio" value="text/css"> css</label>
+	<label><input name="fileType" type="radio" value="text/javascript"> js</label>
+	<textarea name="dropbox" id="dropbox" cols="30" rows="10" placeholder="输入文本 或双击浏览 或拖拽文件"></textarea>
+	
+	<button id="copy">复制代码</button>
+</form>
+</div>
+<iframe name="anonymous" src="" frameborder="0" style="display:none;"></iframe>
+
+<textarea id="out" cols="30" rows="10" contenteditable></textarea>
+
+
+<script src="../../js/lib/node_modules.js"></script>
+<script src="index.js"></script>
+</body>
+
+</html>
