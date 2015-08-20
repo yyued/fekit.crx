@@ -3,45 +3,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> demo </title>
+    <title> 前端工具盒子 </title>
     <link href="css/typo.css" rel="stylesheet">
-    <link href="css/fekit.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="Nav">
-    <div class="group">
-        <div class="group__name">ui</div>
-        <div class="group__list">
-            <div class="group__item -active" data-path="ui">UI</div>
-        </div>
-    </div>
-    <div class="group">
-        <div class="group__name">编码解码</div>
-        <div class="group__list">
-            <div class="group__item" data-path="base64-encoder">url</div>
-            <div class="group__item " data-path="base64-encoder">base64</div>
-            <div class="group__item" data-path="base64-encoder">QRCode</div>
-        </div>
-    </div>
-    <div class="group">
-        <div class="group__name">校验</div>
-        <div class="group__list">
-            <div class="group__item" data-path="base64-encoder">JSON</div>
-            <div class="group__item" data-path="base64-encoder">RegExp</div>
-        </div>
-    </div>
-</div>
+<div class="Fekit Box" id="root"></div>
 
-<div class="Main">
-    <iframe id="targetPage" src="biz/base64-encoder/index.html" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
-</div>
+<!-- <div class=" Box">
+    <div class="Box__output">
+        <img src="http://art.yypm.com/130x90" alt="">
+    </div>        
+    <div class="Box__input">
+        <div class="fmSection">
+            <input type="text">
+        </div>
+        <div class="fmSection">
+            <div class="fmGroup">
+                <input type="range" />
+            </div>
+            <div class="fmGroup">
+                <div class="fkPreviewColor"></div>
+            </div>
+            <div class="fmGroup">
+                <div class="fkBtn">下载</div>
+            </div>
+        </div>
+    </div>
+    <div class="Box__buttom">
+        <div class="Box__item">代码压缩</div>
+        <div class="Box__item">代码格式化</div>
+        <div class="Box__item">更多&raquo;</div>
+    </div>
+</div> -->
+
     
-<script src="js/lib/node_modules.js"></script>
-<script src="js/menuData.js"></script>
-<script src="js/main.js"></script> 
-</body>
+<!-- react entry -->
+<script src="js/react-with-addons.js"></script>
+<script src="js/JSXTransformer.js"></script>
 
+<!-- biz entry -->
+<script src="js/main.js"></script>
+
+</body>
 </html>

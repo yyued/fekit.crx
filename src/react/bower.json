@@ -1,0 +1,21 @@
+{
+  "name": "fekit-react-lib",
+  "version": "0.0.1",
+  "authors": [
+    "twlk28 <twlk28@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "eventEmitter": "~4.2.11",
+    "lodash": "~3.9.3",
+    "react": "~0.13.3"
+  }
+}

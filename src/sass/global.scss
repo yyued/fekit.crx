@@ -1,31 +1,104 @@
 @charset "utf-8";
-/*
- * @file: 全局样式表
- * @author: xxx(xxx@yy.com)
- * @update: 2015-05-05 21:09:12
- */
 
-/* 全局变量配置 */
-$base-font-size          : 12px !default; // 字号
-$base-font-family        : Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif !default; // 字体族
-$base-line-height        : 1.5 !default; // 行号
-$base-color              : #333 !default; // 字体颜色
-$base-bg-color           : #fff !default; // 背景颜色
-$base-link-color         : #333 #f40 !default; // 链接颜色[default，hover]
+@import "base/mixins";
+/*@import "color-picker";*/
 
-@import "base/base"; // 样式基础设置
-@import "slice"; // sprites切片样式
+/* utils */
+.fl{float: left;}
+.fr{float: right;}
 
-body {
-    font: #{$base-font-size}/#{$base-line-height} $base-font-family;
-    color: $base-color;
-    background-color: $base-bg-color;
-}
-a {
-    text-decoration: none;
-    color: nth($base-link-color,1);
-    &:hover {
-        text-decoration: underline;
-        color: nth($base-link-color,2);
-    }
-}
+/* fekit::global */
+html{background-color: #33DABD;}
+input[type="range"]{margin-top: 6px; cursor: pointer;}
+label input{margin-right: 20px;}
+.Fekit textarea { box-sizing: border-box; padding: 6px 12px; border: 0 none; width: 100%; outline: 0 none; color: #465161; }
+.Fekit input { border: 0 none; border-bottom: 1px solid #EBEBEB; padding: 5px 10px; background-color: #fff; color: #465161; outline: 0 none; }
+.fkBtn,
+.Fekit button {  width: 80px;  display: inline-block; margin-right: 10px; background-color: #33DABD; color: #fff; height: 40px; line-height: 40px; overflow: hidden; text-align: center; cursor: pointer; outline: 0;border: 0 none;}
+.fkBtn:hover,
+.Fekit button:hover{opacity: .8; text-decoration: none;}
+.Fekit label{cursor: pointer; line-height: 40px;}
+.Fekit label input[type="radio"]{margin-right: 3px;}
+.Fekit b{background: #C7DBD8;}
+
+/* fekit::common */
+.remove{display:none;}  
+.hidden{visibility: hidden;}
+
+/* fekit::biz */
+.Fekit{}
+.Menu {float: left; width: 200px; background-color: #3F4A59; color: #fff; min-height: 500px; overflow: auto;}
+.Menu:before, .Menu:after { content: ""; display: table; line-height: 0; }
+.Menu:after { clear: both; }
+.Menu__item { display: block; height: 32px; line-height: 32px; font-size: 16px; color: #fff; text-indent: 2em; color: #fff; cursor: pointer; transition: all 0.3s ease-out;}
+.Menu__item.-active, .Menu__item:hover { background-color: #33DABD; color: #fff; text-decoration: none; }
+.Menu::-webkit-scrollbar-track-piece { background-color: #576270; }
+.Menu::-webkit-scrollbar { width: 5px; }
+.Menu::-webkit-scrollbar-thumb { background: #33DABD; }
+.Page {position: relative; padding: 10px 30px; overflow: auto; margin-left: 200px;  -webkit-user-select:none;}
+.Page__input{padding: 20px; background-color: #FAFBFC; position: relative;}
+.Page__output{padding: 20px; margin-top: 20px; background: #FAFBFC;}
+.fmSection{@include clearfix;}
+.fmGroup{ margin: 0 80px 10px 0 ; float: left; @include clearfix; }
+.fmGroup__title{line-height: 40px;}
+.fmGroup--hasHor .fmGroup__title{float: left; margin-right: 20px;}
+.fmGroup--hasHor .fmGroup__item{float: left; margin-right: 10px;}
+.fmFile{width: 200px; height: 40px; border:2px dashed #000; cursor: pointer; transition: all 0.3s ease-out; text-align: center; box-sizing: border-box;}
+.fmFile__name{font-size: 14px; line-height: 36px;}
+.fmFile:hover,
+.fmFile.-active{border-color: #33DABD;}
+
+/* fekit::ui */
+.fkPop{position: fixed; top: 10px; right: -400px; opacity: 0; padding: 15px 20px; background: #399383; transition: all 0.3s ease;}
+.fkPop__txt{color: #fff;}
+.fkPop.-active{opacity: 1; right: 10px;}
+ 
+.fmPreviewImg{width: 100%; max-width: 200px;}
+
+.fkColorPk{@include clearfix;}
+.fkColorPk__input{float: left; width: 80px; height: 29px;}
+.fkColorPk__preview{float: left; width: 40px; height: 40px; background-color: red; cursor: pointer;}
+.fkColorPk .colorpicker{width: 400px; height: 240px; transition: all 0.3s ease-out; opacity: 0; display: none;}
+.fkColorPk.-active .colorpicker{opacity: 1; display: block;}
+
+/* MiniFekit::common */
+.Box .fmGroup{margin: 10px 10px 0 0;}
+/* MiniFekit::biz */
+.Box{width: 320px; background-color: #fff; @include clearfix;}
+.Box__output{margin-top: 10px; height: 300px; position: relative; background-color: #FAFBFC;}
+.Box__output img{position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; }
+.Box__input{margin-top: 10px; padding: 10px; background-color: #FAFBFC;}
+.Box__buttom{margin-top: 10px; background: #3F4A59;}
+.Box__item{padding-left: 25px; line-height: 30px; color: #fff; cursor: pointer;}
+.Box__item:hover{background: #33DABD;}
+
+.Box input[type="range"]{margin-top: 6px;}
+.Box input[type="text"]{box-sizing: border-box; width: 100%;}
+.Box .fkBtn{margin-right: -10px;}
+
+
+/* page::color-palette */
+div.palette input { background: #FAFBFC; border: 0; padding: 5px 10px 5px 0;}
+.palette{-webkit-user-select:none; @include clearfix;}
+.palette__hd{border-bottom: 2px solid #000; margin-bottom: 10px;}
+.palette__title{ width: 50%; font-size: 22px;}
+.palette__btn{ float: right; margin-top: 1px; cursor: pointer;}
+.palette__bd {margin-right: -15px; }
+.palette__item { display: inline-block; width: 240px; height: 80px; /*margin: 0 15px 15px 0;*/ position: relative; overflow: hidden; padding: 10px; border: 1px dashed #FAFBFC; }
+.palette__item:before, .palette__item:after { content: ""; display: table; }
+.palette__item:after { clear: both; }
+.pcard__color { float: left; width: 80px; height: 80px; background: red; margin-right: 10px; padding: 0 !important; cursor: pointer; font-size: 0; }
+.pcard__main { float: right; }
+.pcard__name { width: 135px; margin-top: 5px; padding-left: 0 !important; }
+.pcard__hex { width: 135px; position: relative; }
+.pcard__hexSign { position: absolute; top: 5px; }
+.pcard__hexVal { width: 120px; }
+.pcard__close { position: absolute; top: -7px; right: -7px; width: 30px; height: 30px; border-radius: 15px; text-align: center; text-indent: -6px; color: #777; font: 26px/36px arial, sans-serif; text-decoration: none; text-shadow: 0 1px 0 #fff; display: none; cursor: pointer; }
+.pcard__close:hover { color: #33DABD; }
+.pcard--on, .pcard:hover { border-color: #aaa; }
+.pcard--on .pcard__close, .pcard:hover .pcard__close { display: block; }
+
+/* page::css-triangle */
+.CssTriangleViewer{position: absolute;top: 0px;right: 0px;width: 40%;height: 100%;}
+.CssTriangleViewer__entity{position: absolute; top: 0; right: 0; left: 0; bottom: 0; margin:auto; widows: 40%; height: 40%;}
+

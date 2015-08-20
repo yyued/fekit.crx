@@ -151,7 +151,7 @@ module.exports = function(gulp, plugins) {
 
     gulp.task('default', ['dev_conn'], function(){
         gulp.watch('src/img/slice/**', ['dev_slice2css'])
-        // gulp.watch('src/sass/**', ['dev_sass'])
+        gulp.watch('src/sass/**', ['dev_sass'])
         gulp.watch('src/img/**', reload)
         gulp.watch('src/js/**', reload)
         gulp.watch('src/*.html', reload)

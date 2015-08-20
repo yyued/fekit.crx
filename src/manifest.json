@@ -3,7 +3,7 @@
 
     "name": "fekit",
     "description": "f2e toolkit",
-    "version": "0.0.1",
+    "version": "0.1.1",
 
     "permissions": [
         "tabs",
@@ -12,11 +12,11 @@
     ],
     "browser_action": {
         "default_icon": "img/icon32.png",
-        "default_popup": "main.html",
-        "icons": { 
-            "16": "icon16.png",
-            "48": "icon48.png",
-            "128": "icon128.png" 
-        }
+        "default_popup": "main.html"
+    },
+    "icons":{
+        "16": "img/icon16.png",
+        "48": "img/icon64.png",
+        "128": "img/icon128.png"
     }
 }

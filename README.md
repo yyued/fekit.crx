@@ -12,7 +12,7 @@
 
 
 ### <a name="intro"></a>主要功能 [[⬆]](#top)
-插件地址：[fekit 0.0.1][fekit]
+插件地址：[fekit 0.1.1][fekit]
 
 这是一个前端工具箱的Chrome插件：
 * 代码压缩、格式化
@@ -21,15 +21,10 @@
 * 正则表达式
 * 其他辅助工具：设计师颜色标注、css代码片段生成
 
-也提供简化Chrome插件开发的胶水任务：
-* 自动分析 package.json，拉取包并用browserify打包成1个文件
-* 开发实时预览
-* 打包，生成可直接发布成插件的压缩包
-
 
 ### <a name="sys-env"></a>开发环境 [[⬆]](#top)
 1. Node 环境：*默认此步骤已完成*  （Mac建议使用 [Brew] 安装 [Node.js]） 
-2. 公共模块：`npm install -g gulp browserify`
+2. 公共模块：`npm install -g gulp webpack`
 
 
 ### <a name="file-tree"></a>文件结构 [[⬆]](#top)
@@ -53,6 +48,7 @@
 │   ├── main.html
 │   └── manifest.json
 │
+├── webpack.config.js
 └── package.json
 
 ```
@@ -60,10 +56,7 @@
 
 ### <a name="task-dtls"></a>任务说明 [[⬆]](#top)
 #### 初始化项目
-* 执行`npm i`，拉取gulp依赖模块
-
-#### 预开发
-* `gulp predev` dev阶段预处理，执行脚本`scripts/post-install.js`，拉取`src/js/package.json`模块并browserify成1个文件`src/js/lib/node_modules.js`。
+* 执行`npm i`，拉取依赖模块
 
 #### 开发
 * `gulp` 创建一个链接，自动检测`src`文件夹下的静态文件，自动刷新。

@@ -64,16 +64,16 @@ module.exports = function(gulp, plugins) {
             }
         })
     })
-    gulp.task('build_prejs', function(){
+    gulp.task('build_js', function(){
         return gulp.src(['src/js/**', '!src/js/package.json', '!src/js/node_modules', '!src/js/node_modules/**'])
             .pipe(gulp.dest('dest/js'))
     })
-    gulp.task('build_js', ['build_prejs'], function() {
-        return gulp.src(['dest/js/*.js', '!dest/js/lib/**'])
-            .pipe(plugins.uglify({mangle:false, preserveComments:'some'}))
-            .pipe(plugins.header(banner, { pkg : pkg } ))
-            .pipe(gulp.dest('dest/js'))
-    })
+    // gulp.task('build_js', ['build_prejs'], function() {
+    //     return gulp.src(['dest/js/*.js', '!dest/js/lib/**'])
+    //         .pipe(plugins.uglify({mangle:false, preserveComments:'some'}))
+    //         .pipe(plugins.header(banner, { pkg : pkg } ))
+    //         .pipe(gulp.dest('dest/js'))
+    // })
     gulp.task('build_img', function() {
         return gulp.src(['src/img/**', '!src/img/**/*.psd', '!src/img/slice/**'])
             .pipe(plugins.imagemin({

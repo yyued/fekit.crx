@@ -1,0 +1,194 @@
+/**
+ * RECOMMENDED STYLES
+ */
+.colorpicker {
+  color: #fff;
+  background: #333;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .colorpicker .map {
+    display: block;
+    position: absolute;
+    top: 25px;
+    bottom: 56px;
+    left: 56px;
+    right: 181px;
+    position: absolute;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    overflow: hidden; }
+    .colorpicker .map.active {
+      cursor: none; }
+    .colorpicker .map.dark .pointer {
+      border-color: #fff; }
+    .colorpicker .map.light .pointer {
+      border-color: #000; }
+    .colorpicker .map .pointer {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      margin-top: -5px;
+      -webkit-border-radius: 100%;
+         -moz-border-radius: 100%;
+              border-radius: 100%;
+      border: 1px solid #000; }
+    .colorpicker .map .background {
+      top: 0;
+      left: 0;
+      position: absolute;
+      height: 100%;
+      width: 100%; }
+    .colorpicker .map .background:before,
+    .colorpicker .map .background:after {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0; }
+    .colorpicker .map .background:after {
+      background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(black));
+      background: -webkit-linear-gradient(top, transparent 0%, black 100%);
+      background: -moz-linear-gradient(top, transparent 0%, black 100%);
+      background: -o-linear-gradient(top, transparent 0%, black 100%);
+      background: linear-gradient(to bottom, transparent 0%, black 100%); }
+    .colorpicker .map .background:before {
+      background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0)));
+      background: -webkit-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 100%);
+      background: -moz-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 100%);
+      background: -o-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%); }
+  .colorpicker .slider {
+    position: absolute;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none; }
+    .colorpicker .slider.vertical {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 10px;
+      cursor: ns-resize; }
+      .colorpicker .slider.vertical .track {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 6px;
+        margin-left: -3px; }
+    .colorpicker .slider.horizontal {
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 10px;
+      cursor: ew-resize; }
+      .colorpicker .slider.horizontal .track {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 6px;
+        margin-top: -3px; }
+    .colorpicker .slider .track {
+      -webkit-border-radius: 3px;
+         -moz-border-radius: 3px;
+              border-radius: 3px;
+      background: #888; }
+    .colorpicker .slider .pointer {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      background: #ddd;
+      margin-left: -7px;
+      margin-bottom: -7px;
+      -webkit-border-radius: 14px;
+         -moz-border-radius: 14px;
+              border-radius: 14px; }
+  .colorpicker .sat-slider {
+    display: block;
+    position: absolute;
+    top: auto;
+    bottom: 33px;
+    left: 56px;
+    right: 181px; }
+  .colorpicker .light-slider {
+    display: block;
+    position: absolute;
+    top: 25px;
+    bottom: 56px;
+    left: 23px;
+    right: auto; }
+  .colorpicker .hue-slider {
+    display: block;
+    position: absolute;
+    top: 25px;
+    bottom: 56px;
+    left: auto;
+    right: 158px; }
+    .colorpicker .hue-slider .track {
+      background: -webkit-gradient(linear, left top, left bottom, from(#FF0000), color-stop(10%, #FF0099), color-stop(20%, #CD00FF), color-stop(30%, #3200FF), color-stop(40%, #0066FF), color-stop(50%, #00FFFD), color-stop(60%, #00FF66), color-stop(70%, #35FF00), color-stop(80%, #CDFF00), color-stop(90%, #FF9900), to(#FF0000));
+      background: -webkit-linear-gradient(top, #FF0000 0%, #FF0099 10%, #CD00FF 20%, #3200FF 30%, #0066FF 40%, #00FFFD 50%, #00FF66 60%, #35FF00 70%, #CDFF00 80%, #FF9900 90%, #FF0000 100%);
+      background: -moz-linear-gradient(top, #FF0000 0%, #FF0099 10%, #CD00FF 20%, #3200FF 30%, #0066FF 40%, #00FFFD 50%, #00FF66 60%, #35FF00 70%, #CDFF00 80%, #FF9900 90%, #FF0000 100%);
+      background: -o-linear-gradient(top, #FF0000 0%, #FF0099 10%, #CD00FF 20%, #3200FF 30%, #0066FF 40%, #00FFFD 50%, #00FF66 60%, #35FF00 70%, #CDFF00 80%, #FF9900 90%, #FF0000 100%);
+      background: linear-gradient(to bottom, #FF0000 0%, #FF0099 10%, #CD00FF 20%, #3200FF 30%, #0066FF 40%, #00FFFD 50%, #00FF66 60%, #35FF00 70%, #CDFF00 80%, #FF9900 90%, #FF0000 100%); }
+  .colorpicker .sample {
+    display: block;
+    position: absolute;
+    top: 25px;
+    bottom: auto;
+    left: auto;
+    right: 25px;
+    width: 100px;
+    height: 100px; }
+    .colorpicker .sample .current {
+      height: 50%; }
+    .colorpicker .sample .origin {
+      height: 50%; }
+  .colorpicker .details {
+    display: block;
+    position: absolute;
+    top: 140px;
+    bottom: 0;
+    left: auto;
+    right: 25px;
+    width: 100px;
+    overflow: hidden; }
+    .colorpicker .details ul {
+      padding: 0;
+      margin: 0 0 20px 0; }
+      .colorpicker .details ul li {
+        list-style-type: none; }
+    .colorpicker .details label {
+      display: inline-block;
+      color: #888;
+      width: 15px;
+      margin-right: 5px;
+      text-align: right; }
+    .colorpicker .details input {
+      width: 74px;
+      text-transform: uppercase;
+      background: none;
+      -webkit-border-radius: 3px;
+         -moz-border-radius: 3px;
+              border-radius: 3px;
+      border: none;
+      outline: none;
+      color: #ccc;
+      background: rgba(0, 0, 0, 0.1); }
+      .colorpicker .details input:focus {
+        color: #333;
+        background: rgba(255, 255, 255, 0.9); }
+
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3Nhc3MvY29sb3ItcGlja2VyLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0lBRUc7QUFXSDtFQUNFLGFBQVk7RUFDWixrQkFBaUI7RUFWakIsZ0JBQWU7RUFDZixvQkFBbUI7RUFDbkIsUUFTYztFQVJkLFdBUW9CO0VBUHBCLFNBT2lCO0VBTmpCLFVBTXVCLEVBSFg7RUFLWjtJQWJBLGdCQUFlO0lBQ2Ysb0JBQW1CO0lBQ25CLFdBWW1CO0lBWG5CLGNBVytCO0lBVi9CLFlBVXlCO0lBVHpCLGNBU3NDO0lBQ3BDLG9CQUFtQjtJQUNuQiwyQkFBa0I7T0FBbEIsd0JBQWtCO1FBQWxCLHVCQUFrQjtZQUFsQixtQkFBa0I7SUFDbEIsa0JBQWlCLEVBSmI7SUFNSDtNQUNDLGNBQWEsRUFETDtJQUlIO01BQ0wsb0JBQW1CLEVBREo7SUFJVDtNQUNOLG9CQUFtQixFQURIO0lBSWxCO01BQ0Usb0JBQW1CO01BQ25CLGFBQVk7TUFDWixjQUFhO01BQ2IsbUJBQWtCO01BQ2xCLGtCQUFpQjtNQUNqQiw2QkFBb0I7U0FBcEIsMEJBQW9CO2NBQXBCLHFCQUFvQjtNQUNwQix3QkFBdUIsRUFQZjtJQVVWO01BQ0UsUUFBTztNQUNQLFNBQVE7TUFDUixvQkFBbUI7TUFDbkIsY0FBYTtNQUNiLGFBQVksRUFMRDtJQVNGOztNQUNULGdCQUFlO01BQ2YsYUFBWTtNQUNaLG9CQUFtQjtNQUNuQixRQUFPO01BQ1AsU0FBUTtNQUNSLFdBQVU7TUFDVixVQUFTLEVBUFE7SUFVUjtNQUNULDJGQUEyQjtNQUEzQixzRUFBMkI7TUFBM0IsbUVBQTJCO01BQTNCLGlFQUEyQjtNQUEzQixvRUFBMkIsRUFEVjtJQUlSO01BQ1Qsb0dBQTJCO01BQTNCLGtGQUEyQjtNQUEzQiwrRUFBMkI7TUFBM0IsNkVBQTJCO01BQTNCLDhFQUEyQixFQURUO0VBTXRCO0lBQ0Usb0JBQW1CO0lBQ25CLDJCQUFrQjtPQUFsQix3QkFBa0I7UUFBbEIsdUJBQWtCO1lBQWxCLG1CQUFrQixFQUZYO0lBSU47TUFDQyxRQUFPO01BQ1AsV0FBVTtNQUNWLFdBQVU7TUFDVixhQUFZO01BQ1osbUJBQWtCLEVBTFI7TUFPVjtRQUNFLG9CQUFtQjtRQUNuQixRQUFPO1FBQ1AsV0FBVTtRQUNWLFdBQVU7UUFDVixZQUFXO1FBQ1gsbUJBQWtCLEVBTlo7SUFVVDtNQUNDLFNBQVE7TUFDUixVQUFTO01BQ1QsVUFBUztNQUNULGNBQWE7TUFDYixtQkFBa0IsRUFMTjtNQU9aO1FBQ0Usb0JBQW1CO1FBQ25CLFNBQVE7UUFDUixVQUFTO1FBQ1QsVUFBUztRQUNULGFBQVk7UUFDWixrQkFBaUIsRUFOWDtJQVVWO01BQ0UsNEJBQW1CO1NBQW5CLHlCQUFtQjtjQUFuQixvQkFBbUI7TUFDbkIsa0JBQWlCLEVBRlg7SUFLUjtNQUNFLG9CQUFtQjtNQUNuQixhQUFZO01BQ1osV0FBVTtNQUNWLGFBQVk7TUFDWixjQUFhO01BQ2Isa0JBQWlCO01BQ2pCLG1CQUFrQjtNQUNsQixxQkFBb0I7TUFDcEIsNkJBQW9CO1NBQXBCLDBCQUFvQjtjQUFwQixxQkFBb0IsRUFUWjtFQWNaO0lBL0hBLGdCQUFlO0lBQ2Ysb0JBQW1CO0lBQ25CLFdBOEhtQjtJQTdIbkIsY0E2SCtCO0lBNUgvQixZQTRIeUI7SUEzSHpCLGNBMkhzQyxFQUR6QjtFQUliO0lBbklBLGdCQUFlO0lBQ2Ysb0JBQW1CO0lBQ25CLFdBa0ltQjtJQWpJbkIsY0FpSStCO0lBaEkvQixZQWdJeUI7SUEvSHpCLGFBK0hxQyxFQUR0QjtFQUlmO0lBdklBLGdCQUFlO0lBQ2Ysb0JBQW1CO0lBQ25CLFdBc0ltQjtJQXJJbkIsY0FxSStCO0lBcEkvQixZQW9JeUI7SUFuSXpCLGNBbUlzQyxFQUR6QjtJQUdYO01BQ0UsbVVBQTJCO01BQTNCLHlMQUEyQjtNQUEzQixzTEFBMkI7TUFBM0Isb0xBQTJCO01BQTNCLHVMQUEyQixFQURyQjtFQWtCVjtJQTVKQSxnQkFBZTtJQUNmLG9CQUFtQjtJQUNuQixXQTJKbUI7SUExSm5CLGNBMEorQjtJQXpKL0IsWUF5SnlCO0lBeEp6QixhQXdKcUM7SUFDbkMsY0FBYTtJQUNiLGVBQWMsRUFIUDtJQUtQO01BQ0UsYUFBWSxFQURKO0lBSVY7TUFDRSxhQUFZLEVBREw7RUFLWDtJQTFLQSxnQkFBZTtJQUNmLG9CQUFtQjtJQUNuQixZQXlLb0I7SUF4S3BCLFdBd0s2QjtJQXZLN0IsWUF1SzBCO0lBdEsxQixhQXNLbUM7SUFDakMsY0FBYTtJQUNiLGtCQUFpQixFQUhUO0lBS1I7TUFDRSxZQUFXO01BQ1gsb0JBQWtCLEVBRmhCO01BSUY7UUFDRSx1QkFBc0IsRUFEcEI7SUFLTjtNQUNFLHVCQUFzQjtNQUN0QixhQUFZO01BQ1osYUFBWTtNQUNaLG1CQUFrQjtNQUNsQixtQkFBa0IsRUFMYjtJQVFQO01BQ0UsYUFBWTtNQUNaLDJCQUEwQjtNQUMxQixrQkFBaUI7TUFDakIsNEJBQW1CO1NBQW5CLHlCQUFtQjtjQUFuQixvQkFBbUI7TUFDbkIsY0FBYTtNQUNiLGVBQWM7TUFDZCxhQUFZO01BQ1osZ0NBQXFCLEVBUmhCO01BVUo7UUFDQyxhQUFZO1FBQ1osc0NBQXFCLEVBRmQiLCJmaWxlIjoiY29sb3ItcGlja2VyLmNzcyIsInNvdXJjZVJvb3QiOiIuLi9zYXNzLyJ9 */
