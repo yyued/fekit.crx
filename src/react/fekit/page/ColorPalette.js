@@ -44,8 +44,8 @@ var Page = React.createClass({
 		var $items = state.cards.map((v,k)=>{
 			var styleOfItem = {display: `${v.show?'block':'none'}`, float: 'left' }
 			return (
-				<div style={styleOfItem}>
-					<MyColorPicker2  key={k} defaultText={v.name} defaultColor={v.color} removeCB={this.__removeCB.bind(this,k)} changeTextCB={this.__changeTextCB} changeColorCB={this.__changeColorCB}/>
+				<div key={k} style={styleOfItem}>
+					<MyColorPicker2 defaultText={v.name} defaultColor={v.color} removeCB={this.__removeCB.bind(this,k)} changeTextCB={this.__changeTextCB} changeColorCB={this.__changeColorCB}/>
 				</div>
 			)
 		})

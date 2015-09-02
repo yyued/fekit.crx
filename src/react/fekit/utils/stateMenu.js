@@ -6,7 +6,6 @@ var NAME_SPACE = 'stateMenu'
 
 module.exports = {
 	componentWillMount: function(){
-		// console.log(11, this )
 		EV.addChangeListener(NAME_SPACE, this.__stateMenuListener || blackFunction)
 	},
 	componentWillUnmount: function(){

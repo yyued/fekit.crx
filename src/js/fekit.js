@@ -12862,7 +12862,7 @@
 			if (ENV_RELEASE) {
 				chrome.runtime.onMessage.addListener((function (req, sender, resp) {
 					var url = req.route;
-					window.__defaultURL = url;
+					// window.__defaultURL = url
 					this.state.active = url;
 					this.setState(this.state);
 					this.setStateMenu('active', url);
@@ -12916,7 +12916,6 @@
 
 	module.exports = {
 		componentWillMount: function componentWillMount() {
-			// console.log(11, this )
 			EV.addChangeListener(NAME_SPACE, this.__stateMenuListener || blackFunction);
 		},
 		componentWillUnmount: function componentWillUnmount() {
@@ -13455,15 +13454,12 @@
 	module.exports = {
 	    "qrcode-generator": "二维码生成器",
 	    "regexp-tester": "正则表达式",
-	    "formatter": "代码格式化",
-	    "minifier": "代码压缩",
+	    "encoder": "字符串编码解码",
+	    "formatter": "代码压缩/格式化",
 	    "base64-encoder": "图片 base64编码",
-	    "url-encoder": "URL 编码解码",
 	    "css-triangle": "css 三角形",
 	    "css-transparent": "css 透明代码",
-	    "color-palette": "设计师调色板",
-	    "html-escaper": "html 转义",
-	    "js-escaper": "js 转义"
+	    "color-palette": "设计师调色板"
 	};
 
 /***/ },
@@ -13475,16 +13471,13 @@
 	var _ = __webpack_require__(6);
 	var stateNotification = __webpack_require__(17);
 
-	var Notification = __webpack_require__(18);
 	var MyColorPickerPanel = __webpack_require__(19);
+	var Notification = __webpack_require__(18);
 	var Formatter = __webpack_require__(194);
-	var Minifier = __webpack_require__(221);
 	var Base64Encoder = __webpack_require__(224);
 	var QrcodeGenerator = __webpack_require__(225);
 	var RegexpTester = __webpack_require__(290);
-	var UrlEncoder = __webpack_require__(291);
-	var HtmlEscaper = __webpack_require__(292);
-	var JsEscaper = __webpack_require__(293);
+	var Encoder = __webpack_require__(307);
 	var CssTransparent = __webpack_require__(294);
 	var CssTriangle = __webpack_require__(296);
 	var ColorPalette = __webpack_require__(298);
@@ -13492,12 +13485,6 @@
 	var Page = React.createClass({
 		displayName: 'Page',
 
-		// getInitialState: function () {
-		//     return {
-		//         value:'111',
-		//         value2: '11'
-		//     }
-		// },
 		mixins: [stateNotification],
 		render: function render() {
 
@@ -13505,13 +13492,10 @@
 				'div',
 				{ className: 'Page' },
 				React.createElement(Formatter, { url: 'formatter' }),
-				React.createElement(Minifier, { url: 'minifier' }),
 				React.createElement(Base64Encoder, { url: 'base64-encoder' }),
 				React.createElement(QrcodeGenerator, { url: 'qrcode-generator' }),
 				React.createElement(RegexpTester, { url: 'regexp-tester' }),
-				React.createElement(UrlEncoder, { url: 'url-encoder' }),
-				React.createElement(HtmlEscaper, { url: 'html-escaper' }),
-				React.createElement(JsEscaper, { url: 'js-escaper' }),
+				React.createElement(Encoder, { url: 'encoder' }),
 				React.createElement(CssTransparent, { url: 'css-transparent' }),
 				React.createElement(CssTriangle, { url: 'css-triangle' }),
 				React.createElement(ColorPalette, { url: 'color-palette' }),
@@ -35519,7 +35503,9 @@
 	// require('../../node_modules/react-ace/node_modules/brace/theme/github')
 	__webpack_require__(216);
 
-	var beautify = __webpack_require__(217);
+	var Beautify = __webpack_require__(217);
+	var UglifyJS = __webpack_require__(222);
+	var CleanCSS = __webpack_require__(223);
 
 	var Page = React.createClass({
 		displayName: 'Page',
@@ -35529,10 +35515,15 @@
 				input: '',
 				output: '',
 				lang: 'javascript',
+				isDoMinify: false,
 				show: false
 			};
 		},
 		mixins: [stateMenu, stateNotification],
+		componentDidMount: function componentDidMount() {
+			this.refs.editor1.editor.$blockScrolling = Infinity;
+			this.refs.editor2.editor.$blockScrolling = Infinity;
+		},
 		render: function render() {
 			var state = this.state;
 			var classNameOfPage = state.show ? '' : 'remove';
@@ -35561,25 +35552,25 @@
 							React.createElement(
 								'label',
 								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'html'), checked: state.lang == 'html' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
+								React.createElement('input', { onChange: this.__handleSwitchLang.bind(this, 'html'), checked: state.lang == 'html' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
 								' html'
 							),
 							React.createElement(
 								'label',
 								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'css'), checked: state.lang == 'css' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
+								React.createElement('input', { onChange: this.__handleSwitchLang.bind(this, 'css'), checked: state.lang == 'css' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
 								'css'
 							),
 							React.createElement(
 								'label',
 								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'javascript'), checked: state.lang == 'javascript' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
+								React.createElement('input', { onChange: this.__handleSwitchLang.bind(this, 'javascript'), checked: state.lang == 'javascript' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
 								'js'
 							),
 							React.createElement(
 								'label',
 								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'json'), checked: state.lang == 'json' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
+								React.createElement('input', { onChange: this.__handleSwitchLang.bind(this, 'json'), checked: state.lang == 'json' ? 'true' : '', type: 'radio', name: 'formatFileType' }),
 								'json'
 							)
 						),
@@ -35588,17 +35579,30 @@
 							{ className: 'fmGroup' },
 							React.createElement(
 								'div',
-								{ className: 'fkBtn', onClick: this.__handleCopy },
-								'复制结果'
+								{ className: 'fkBtn', onClick: this.__handleCopy, style: { width: '110px' } },
+								'复制压缩代码'
+							),
+							React.createElement(
+								'div',
+								{ className: 'fkBtn', onClick: this.__handleCopy2, style: { width: '110px' } },
+								'复制格式代码'
 							)
 						)
 					),
-					React.createElement(AceEditor, { mode: state.lang, theme: 'idle_fingers', onChange: this.__handleChange, value: state.input, width: '800', height: '100', name: 'UNIQUE_ID1' })
+					React.createElement(
+						'div',
+						{ onClick: this.__handleFocus },
+						React.createElement(AceEditor, { ref: 'editor1', mode: state.lang, theme: 'idle_fingers', onChange: this.__handleChange, value: state.input, width: '800', height: '100', name: 'UNIQUE_ID1' })
+					)
 				),
 				React.createElement(
 					'div',
 					{ className: 'Page__output' },
-					React.createElement(AceEditor, { mode: state.lang, theme: 'idle_fingers', onChange: this.__handleChange2, value: this.state.output, width: '800', height: '400', name: 'UNIQUE_ID2' })
+					React.createElement(
+						'div',
+						{ onClick: this.__handleFocus2 },
+						React.createElement(AceEditor, { ref: 'editor2', mode: state.lang, theme: 'idle_fingers', onChange: this.__handleChange2, value: this.state.output, width: '800', height: '400', name: 'UNIQUE_ID2' })
+					)
 				)
 			);
 		},
@@ -35612,19 +35616,34 @@
 			this.setState(state);
 		},
 		__handleSwitchLang: function __handleSwitchLang(lang) {
-			this.state.lang = lang;
-			this.state.output = getBeautifyCode(this.state.input, lang);
-			this.setState(this.state);
-		},
-		__handleChange: function __handleChange(newValue, oldValue) {
 			var state = this.state;
+			state.lang = lang;
+			if (state.isDoMinify) {
+				state.input = getMinifyCode.call(this, state.output, lang);
+			} else {
+				state.output = getBeautifyCode(state.input, lang);
+			}
+			this.setState(state);
+		},
+		__handleFocus: function __handleFocus(e) {
+			this.state.isDoMinify = false;
+		},
+		__handleChange: function __handleChange(newValue) {
+			var state = this.state;
+			if (state.isDoMinify) return;
 			state.input = newValue;
-			// state.lang = guessFileType(newValue)
 			state.output = getBeautifyCode(newValue, state.lang);
 			this.setState(state);
 		},
+		__handleFocus2: function __handleFocus2(e) {
+			this.state.isDoMinify = true;
+		},
 		__handleChange2: function __handleChange2(newValue) {
-			this.state.output = newValue;
+			var state = this.state;
+			if (!state.isDoMinify) return;
+			state.output = newValue;
+			state.input = getMinifyCode.call(this, newValue, state.lang);
+			this.setState(state);
 		},
 		__handleFileZone: function __handleFileZone(file) {
 			var _this = this;
@@ -35640,8 +35659,15 @@
 					this.state.lang = 'html';break;
 			}
 			readFileAsText(file, (function (fileContent) {
-				_this.state.input = fileContent;
-				_this.setState(_this.state);
+				var state = _this.state;
+				if (state.isDoMinify) {
+					state.output = fileContent;
+					state.input = getMinifyCode.call(_this, state.output, state.lang);
+				} else {
+					state.input = fileContent;
+					state.output = getBeautifyCode(state.input, state.lang);
+				}
+				_this.setState(state);
 			}).bind(this));
 
 			function readFileAsText(file, cb) {
@@ -35653,6 +35679,10 @@
 			}
 		},
 		__handleCopy: function __handleCopy() {
+			executeCopy(this.state.input);
+			this.setStateNotification('msg', '代码已复制');
+		},
+		__handleCopy2: function __handleCopy2() {
 			executeCopy(this.state.output);
 			this.setStateNotification('msg', '代码已复制');
 		}
@@ -35676,6 +35706,53 @@
 		return fileType = 'javascript'
 		//}
 		;
+	}
+	function getMinifyCode(sourceCode, fileType) {
+		var targetCode;
+		try {
+			switch (fileType) {
+				case 'json':
+					targetCode = doMinifyJSON(sourceCode);break;
+				case 'javascript':
+					targetCode = doMinifyJS(sourceCode);break;
+				case 'css':
+					targetCode = doMinifyCSS(sourceCode);break;
+				case 'html':
+					targetCode = doMinifyHTML(sourceCode);break;
+			}
+		} catch (e) {
+			this.state.input = '';
+			this.setStateNotification('msg', '压缩出错');
+		}
+		return targetCode;
+	}
+
+	function doMinifyJS(source) {
+		var options = {
+			fromString: true
+		};
+		var result = UglifyJS.minify(source, options);
+		return result.code;
+	}
+
+	function doMinifyJSON(source) {
+		var code;
+		try {
+			code = JSON.stringify(JSON.parse(source), null, 0);
+		} catch (e) {}
+		return code || false;
+	}
+
+	function doMinifyCSS(source) {
+		var option = {
+			compatibility: 'ie7'
+		};
+		var result = new CleanCSS(option).minify(source);
+		return result.styles;
+	}
+
+	function doMinifyHTML(source) {
+		return source;
 	}
 
 	function getBeautifyCode(sourceCode, fileType) {
@@ -35720,7 +35797,7 @@
 			'wrap_attributes_indent_size': 4,
 			'end_with_newline': true
 		};
-		var code = beautify.js(source, options);
+		var code = Beautify.js(source, options);
 		return code;
 	}
 
@@ -35728,7 +35805,7 @@
 		var options = {
 			'indent_size': 4
 		};
-		var code = beautify.css(source, options);
+		var code = Beautify.css(source, options);
 		return code;
 	}
 
@@ -35736,7 +35813,7 @@
 		var options = {
 			'indent_size': 4
 		};
-		var code = beautify.html(source, options);
+		var code = Beautify.html(source, options);
 		return code;
 	}
 
@@ -55099,42 +55176,7 @@
 		}
 	});
 
-	module.exports = FileZone
-
-	// function dragAndBrowser(el, handleFiles){
-	//     var $el = $(el)
-	//     var $file = $('<input type="file" style="display: none" accept="image/*" />')
-	//     $file.insertAfter($el)
-
-	//     $el.on('dblclick', function(e){
-	//         $file.trigger('click')
-	//         e.preventDefault()
-	//     })
-	//     $file.on('change', function (e) {
-	//         handleFiles(this.files)
-	//     })
-
-	//     $el.on('dragenter', dragenter)
-	//     $el.on('dragover', dragover)
-	//     $el.on('drop', drop)
-
-	//     function dragenter(e) {
-	//         e.stopPropagation()
-	//         e.preventDefault()
-	//     }
-	//     function dragover(e) {
-	//         e.stopPropagation()
-	//         e.preventDefault()
-	//     }
-	//     function drop(e) {
-	//         e.stopPropagation()
-	//         e.preventDefault()
-
-	//         var files = e.originalEvent.dataTransfer.files
-	//         handleFiles(files)
-	//     }
-	// }
-	;
+	module.exports = FileZone;
 
 /***/ },
 /* 206 */
@@ -63964,234 +64006,7 @@
 
 
 /***/ },
-/* 221 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var UglifyJS = __webpack_require__(222);
-	var CleanCSS = __webpack_require__(223);
-	var _ = __webpack_require__(6);
-	var stateMenu = __webpack_require__(12);
-	var stateNotification = __webpack_require__(17);
-
-	var Notification = __webpack_require__(18);
-	var FileZone = __webpack_require__(205);
-
-	var AceEditor = __webpack_require__(206);
-	var brace = __webpack_require__(195);
-	__webpack_require__(208);
-	__webpack_require__(212);
-	__webpack_require__(213);
-	__webpack_require__(214);
-	__webpack_require__(216);
-
-	var Page = React.createClass({
-		displayName: 'Page',
-
-		getInitialState: function getInitialState() {
-			return {
-				input: '',
-				output: '',
-				lang: 'javascript',
-				show: false
-			};
-		},
-		mixins: [stateMenu, stateNotification],
-		render: function render() {
-			var state = this.state;
-			var classNameOfPage = state.show ? '' : 'remove';
-			return React.createElement(
-				'div',
-				{ className: classNameOfPage },
-				React.createElement(
-					'div',
-					{ className: 'Page__input' },
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement(
-							'div',
-							{ className: 'fmGroup' },
-							React.createElement(FileZone, { callback: this.__handleFileZone })
-						),
-						React.createElement(
-							'div',
-							{ className: 'fmGroup fmGroup--hasHor' },
-							React.createElement(
-								'div',
-								{ className: 'fmGroup__title ' },
-								'语言'
-							),
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'css'), checked: state.lang == 'css' ? 'true' : '', type: 'radio', name: 'minifyFileType' }),
-								'css'
-							),
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'javascript'), checked: state.lang == 'javascript' ? 'true' : '', type: 'radio', name: 'minifyFileType' }),
-								'js'
-							),
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchLang.bind(this, 'json'), checked: state.lang == 'json' ? 'true' : '', type: 'radio', name: 'minifyFileType' }),
-								'json'
-							)
-						),
-						React.createElement(
-							'div',
-							{ className: 'fmGroup' },
-							React.createElement(
-								'div',
-								{ className: 'fkBtn', onClick: this.__handleCopy },
-								'复制结果'
-							)
-						)
-					),
-					React.createElement(AceEditor, { mode: state.lang, theme: 'idle_fingers', onChange: this.__handleChange, value: state.input, width: '800', height: '400', name: 'UNIQUE_ID3' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'Page__output' },
-					React.createElement(AceEditor, { mode: state.lang, theme: 'idle_fingers', onChange: this.__handleChange2, value: this.state.output, width: '800', height: '100', name: 'UNIQUE_ID4' })
-				)
-			);
-		},
-		__stateMenuListener: function __stateMenuListener() {
-			var state = this.state;
-			if (this.getStateMenu('active') === this.props.url) {
-				state.show = true;
-			} else {
-				state.show = false;
-			}
-			this.setState(state);
-		},
-		__handleSwitchLang: function __handleSwitchLang(lang) {
-			var state = this.state;
-			state.lang = lang;
-			state.output = getMinifyCode.call(this, state.input, lang);
-			this.setState(state);
-		},
-		__handleChange: function __handleChange(newValue, oldValue) {
-			var state = this.state;
-			state.input = newValue;
-			state.output = getMinifyCode.call(this, this.state.input, this.state.lang);
-			this.setState(state);
-		},
-		__handleChange2: function __handleChange2(newValue) {
-			this.state.output = newValue;
-		},
-		__handleFileZone: function __handleFileZone(file) {
-			var _this = this;
-
-			switch (file.type) {
-				case 'application/json':
-					this.state.lang = 'json';break;
-				case 'text/javascript':
-					this.state.lang = 'javascript';break;
-				case 'text/css':
-					this.state.lang = 'css';break;
-				case 'text/html':
-					this.state.lang = 'html';break;
-			}
-			readFileAsText(file, (function (fileContent) {
-				_this.state.input = fileContent;
-				_this.state.output = getMinifyCode.call(_this, _this.state.input, _this.state.lang);
-				_this.setState(_this.state);
-			}).bind(this));
-
-			function readFileAsText(file, cb) {
-				var reader = new FileReader();
-				reader.readAsText(file);
-				reader.onload = function (e) {
-					cb(e.target.result);
-				};
-			}
-		},
-		__handleCopy: function __handleCopy() {
-			executeCopy(this.state.output);
-			this.setStateNotification('msg', '代码已复制');
-		}
-	});
-
-	module.exports = Page;
-
-	// utils
-	function guessFileType(source) {
-		var reg_html = /\<\w+\>(?!'|")/gm;
-		var reg_css = /\.\w[\w\d-]*\{/gm;
-		//var reg_js = /function\s+\w[\w\d-_$]*\(/gm
-		var fileType;
-		if (reg_html.test(source)) {
-			return fileType = 'html';
-		}
-		if (reg_css.test(source)) {
-			return fileType = 'css';
-		}
-		//if(reg_js.test(source)){
-		return fileType = 'javascript'
-		//}
-		;
-	}
-
-	function getMinifyCode(sourceCode, fileType) {
-		var targetCode;
-		try {
-			switch (fileType) {
-				case 'json':
-					targetCode = doMinifyJSON(sourceCode);break;
-				case 'javascript':
-					targetCode = doMinifyJS(sourceCode);break;
-				case 'css':
-					targetCode = doMinifyCSS(sourceCode);break;
-			}
-		} catch (e) {
-			this.state.output = '';
-			this.setStateNotification('msg', '压缩出错');
-		}
-		return targetCode;
-	}
-
-	function doMinifyJS(source) {
-		var options = {
-			fromString: true
-		};
-		var result = UglifyJS.minify(source, options);
-		return result.code;
-	}
-
-	function doMinifyJSON(source) {
-		var code;
-		try {
-			code = JSON.stringify(JSON.parse(source), null, 0);
-		} catch (e) {}
-		return code || false;
-	}
-
-	function doMinifyCSS(source) {
-		var option = {
-			compatibility: 'ie7'
-		};
-		var result = new CleanCSS(option).minify(source);
-		return result.styles;
-	}
-
-	function executeCopy(text) {
-		var input = document.createElement('textarea');
-		var ref = document.getElementsByTagName('div')[0];
-		document.body.insertBefore(input, ref);
-		input.value = text;
-		input.focus();
-		input.select();
-		document.execCommand('Copy');
-		input.remove();
-	}
-
-/***/ },
+/* 221 */,
 /* 222 */
 /***/ function(module, exports) {
 
@@ -84199,428 +84014,9 @@
 	}
 
 /***/ },
-/* 291 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 0.lib
-	'use strict';
-
-	var _ = __webpack_require__(6);
-
-	// 0.ui
-	var Notification = __webpack_require__(18);
-
-	// 0.corss-state
-	var stateMenu = __webpack_require__(12);
-	var stateNotification = __webpack_require__(17);
-
-	// 1. main code
-	var Page = React.createClass({
-		displayName: 'Page',
-
-		getInitialState: function getInitialState() {
-			return {
-				input: '',
-				output: '',
-				encode: true,
-				show: false
-			};
-		},
-		mixins: [stateMenu, stateNotification],
-		render: function render() {
-			var state = this.state;
-			var classNameOfPage = state.show ? '' : ' remove';
-			return React.createElement(
-				'div',
-				{ className: classNameOfPage },
-				React.createElement(
-					'div',
-					{ className: 'Page__input' },
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement('textarea', { ref: 'input', cols: '30', rows: '2', placeholder: '请输入url或其他文本', onChange: this.__handleInput, value: state.input })
-					),
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement(
-							'div',
-							{ className: 'fmGroup fmGroup--hasHor' },
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchType.bind(this, true), checked: state.encode ? 'true' : '', type: 'radio', name: 'urlCodeType' }),
-								' encode'
-							),
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchType.bind(this, false), checked: state.encode ? '' : 'true', type: 'radio', name: 'urlCodeType' }),
-								' decode'
-							)
-						),
-						React.createElement(
-							'div',
-							{ className: 'fmGroup' },
-							React.createElement(
-								'div',
-								{ className: 'fkBtn', onClick: this.__handleCopy },
-								'复制结果'
-							)
-						)
-					),
-					React.createElement('div', { className: 'fmSection' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'Page__output' },
-					React.createElement('textarea', { ref: 'output', cols: '30', rows: '2', onChange: this.__handleOutput, value: state.output })
-				)
-			);
-		},
-		__stateMenuListener: function __stateMenuListener() {
-			var state = this.state;
-			if (this.getStateMenu('active') === this.props.url) {
-				state.show = true;
-			} else {
-				state.show = false;
-			}
-			this.setState(state);
-		},
-		__handleCopy: function __handleCopy() {
-			executeCopy(this.state.output);
-			this.setStateNotification('msg', '代码已复制');
-		},
-		__handleInput: function __handleInput() {
-			this.state['input'] = React.findDOMNode(this.refs['input']).value;
-			this.state['output'] = getOutput(this.state['input'], this.state['encode']);
-			this.setState(this.state);
-		},
-		__handleOutput: function __handleOutput() {
-			this.state['output'] = React.findDOMNode(this.refs['output']).value;
-			this.setState(this.state);
-		},
-		__handleSwitchType: function __handleSwitchType(isEncode) {
-			this.state['encode'] = isEncode;
-			this.state['output'] = getOutput(this.state['input'], this.state['encode']);
-			this.setState(this.state);
-		}
-	});
-
-	module.exports = Page;
-
-	// 2. utils
-	function executeCopy(text) {
-		var input = document.createElement('textarea');
-		var ref = document.getElementsByTagName('div')[0];
-		document.body.insertBefore(input, ref);
-		input.value = text;
-		input.focus();
-		input.select();
-		document.execCommand('Copy');
-		input.remove();
-	}
-	function getOutput(input, isEncode) {
-		return isEncode ? encodeURIComponent(input) : decodeURIComponent(input);
-	}
-
-/***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 0.lib
-	'use strict';
-
-	var _ = __webpack_require__(6);
-
-	// 0.ui
-	var Notification = __webpack_require__(18);
-
-	// 0.corss-state
-	var stateMenu = __webpack_require__(12);
-	var stateNotification = __webpack_require__(17);
-
-	// 1. main code
-	var Page = React.createClass({
-		displayName: 'Page',
-
-		getInitialState: function getInitialState() {
-			return {
-				input: '',
-				output: '',
-				escape: true,
-				show: false
-			};
-		},
-		mixins: [stateMenu, stateNotification],
-		render: function render() {
-			var state = this.state;
-			var classNameOfPage = state.show ? '' : ' remove';
-			return React.createElement(
-				'div',
-				{ className: classNameOfPage },
-				React.createElement(
-					'div',
-					{ className: 'Page__input' },
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement('textarea', { ref: 'input', cols: '30', rows: '2', placeholder: '请输入文本~~', onChange: this.__handleInput, value: state.input })
-					),
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement(
-							'div',
-							{ className: 'fmGroup fmGroup--hasHor' },
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchType.bind(this, true), checked: state.escape ? 'true' : '', type: 'radio', name: 'htmlEscapeType' }),
-								' escape'
-							),
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchType.bind(this, false), checked: state.escape ? '' : 'true', type: 'radio', name: 'htmlEscapeType' }),
-								' unescape'
-							)
-						),
-						React.createElement(
-							'div',
-							{ className: 'fmGroup' },
-							React.createElement(
-								'div',
-								{ className: 'fkBtn', onClick: this.__handleCopy },
-								'复制结果'
-							)
-						)
-					),
-					React.createElement('div', { className: 'fmSection' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'Page__output' },
-					React.createElement('textarea', { ref: 'output', cols: '30', rows: '2', onChange: this.__handleOutput, value: state.output })
-				)
-			);
-		},
-		__stateMenuListener: function __stateMenuListener() {
-			var state = this.state;
-			if (this.getStateMenu('active') === this.props.url) {
-				state.show = true;
-			} else {
-				state.show = false;
-			}
-			this.setState(state);
-		},
-		__handleCopy: function __handleCopy() {
-			executeCopy(this.state.output);
-			this.setStateNotification('msg', '代码已复制');
-		},
-		__handleInput: function __handleInput() {
-			this.state['input'] = React.findDOMNode(this.refs['input']).value;
-			this.state['output'] = getOutput(this.state['input'], this.state['escape']);
-			this.setState(this.state);
-		},
-		__handleOutput: function __handleOutput() {
-			this.state['output'] = React.findDOMNode(this.refs['output']).value;
-			this.setState(this.state);
-		},
-		__handleSwitchType: function __handleSwitchType(isEscape) {
-			this.state['escape'] = isEscape;
-			this.state['output'] = getOutput(this.state['input'], this.state['escape']);
-			this.setState(this.state);
-		}
-	});
-
-	module.exports = Page;
-
-	// 2. utils
-	function executeCopy(text) {
-		var input = document.createElement('textarea');
-		var ref = document.getElementsByTagName('div')[0];
-		document.body.insertBefore(input, ref);
-		input.value = text;
-		input.focus();
-		input.select();
-		document.execCommand('Copy');
-		input.remove();
-	}
-	function getOutput(input, isEscape) {
-		return isEscape ? _.escape(input) : _.unescape(input);
-	}
-
-/***/ },
-/* 293 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 0.lib
-	'use strict';
-
-	var _ = __webpack_require__(6);
-
-	// 0.ui
-	var Notification = __webpack_require__(18);
-
-	// 0.corss-state
-	var stateMenu = __webpack_require__(12);
-	var stateNotification = __webpack_require__(17);
-
-	// 1. main code
-	var Page = React.createClass({
-		displayName: 'Page',
-
-		getInitialState: function getInitialState() {
-			return {
-				input: '',
-				output: '',
-				escape: true,
-				show: false
-			};
-		},
-		mixins: [stateMenu, stateNotification],
-		render: function render() {
-			var state = this.state;
-			var classNameOfPage = state.show ? '' : ' remove';
-			return React.createElement(
-				'div',
-				{ className: classNameOfPage },
-				React.createElement(
-					'div',
-					{ className: 'Page__input' },
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement('textarea', { ref: 'input', cols: '30', rows: '2', placeholder: '请输入文本~', onChange: this.__handleInput, value: state.input })
-					),
-					React.createElement(
-						'div',
-						{ className: 'fmSection' },
-						React.createElement(
-							'div',
-							{ className: 'fmGroup fmGroup--hasHor' },
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchType.bind(this, true), checked: state.escape ? 'true' : '', type: 'radio', name: 'jsEscapeType' }),
-								' escape'
-							),
-							React.createElement(
-								'label',
-								{ className: 'fmGroup__item' },
-								React.createElement('input', { onClick: this.__handleSwitchType.bind(this, false), checked: state.escape ? '' : 'true', type: 'radio', name: 'jsEscapeType' }),
-								' unescape'
-							)
-						),
-						React.createElement(
-							'div',
-							{ className: 'fmGroup' },
-							React.createElement(
-								'div',
-								{ className: 'fkBtn', onClick: this.__handleCopy },
-								'复制结果'
-							)
-						)
-					),
-					React.createElement('div', { className: 'fmSection' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'Page__output' },
-					React.createElement('textarea', { ref: 'output', cols: '30', rows: '2', onChange: this.__handleOutput, value: state.output })
-				)
-			);
-		},
-		__stateMenuListener: function __stateMenuListener() {
-			var state = this.state;
-			if (this.getStateMenu('active') === this.props.url) {
-				state.show = true;
-			} else {
-				state.show = false;
-			}
-			this.setState(state);
-		},
-		__handleCopy: function __handleCopy() {
-			executeCopy(this.state.output);
-			this.setStateNotification('msg', '代码已复制');
-		},
-		__handleInput: function __handleInput() {
-			this.state['input'] = React.findDOMNode(this.refs['input']).value;
-			this.state['output'] = getOutput(this.state['input'], this.state['escape']);
-			this.setState(this.state);
-		},
-		__handleOutput: function __handleOutput() {
-			this.state['output'] = React.findDOMNode(this.refs['output']).value;
-			this.setState(this.state);
-		},
-		__handleSwitchType: function __handleSwitchType(isEscape) {
-			this.state['escape'] = isEscape;
-			this.state['output'] = getOutput(this.state['input'], this.state['escape']);
-			this.setState(this.state);
-		}
-	});
-
-	module.exports = Page;
-
-	// 2. utils
-	function executeCopy(text) {
-		var input = document.createElement('textarea');
-		var ref = document.getElementsByTagName('div')[0];
-		document.body.insertBefore(input, ref);
-		input.value = text;
-		input.focus();
-		input.select();
-		document.execCommand('Copy');
-		input.remove();
-	}
-	function getOutput(input, isEscape) {
-		return isEscape ? escapeJs(input) : unescapeJs(input);
-	}
-
-	// https://github.com/joliss/js-string-escape
-	function escapeJs(str) {
-		return ('' + str).replace(/["'\\\n\r\u2028\u2029]/g, function (char) {
-			switch (char) {
-				case '"':
-				case '\'':
-				case '\\':
-					return '\\' + char;
-				case '\n':
-					return '\\n';
-				case '\r':
-					return '\\r';
-				case '\u2028':
-					return '\\u2028';
-				case '\u2029':
-					return '\\u2029';
-			}
-		});
-	}
-
-	function unescapeJs(str) {
-		return ('' + str).replace(/\\"|\\'|\\\\|\\n|\\r|\\u2028|\\u2029]/g, function (char) {
-			switch (char) {
-				case '\\"':
-					return '"';
-				case '\\\'':
-					return '\'';
-				case '\\\\':
-					return '\\';
-				case '\\n':
-					return '\n';
-				case '\\r':
-					return '\r';
-				case '\\u2028':
-					return '\u2028';
-				case '\\u2029':
-					return '\u2029';
-			}
-		});
-	}
-
-/***/ },
+/* 291 */,
+/* 292 */,
+/* 293 */,
 /* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -85334,8 +84730,8 @@
 				var styleOfItem = { display: '' + (v.show ? 'block' : 'none'), float: 'left' };
 				return React.createElement(
 					'div',
-					{ style: styleOfItem },
-					React.createElement(MyColorPicker2, { key: k, defaultText: v.name, defaultColor: v.color, removeCB: _this.__removeCB.bind(_this, k), changeTextCB: _this.__changeTextCB, changeColorCB: _this.__changeColorCB })
+					{ key: k, style: styleOfItem },
+					React.createElement(MyColorPicker2, { defaultText: v.name, defaultColor: v.color, removeCB: _this.__removeCB.bind(_this, k), changeTextCB: _this.__changeTextCB, changeColorCB: _this.__changeColorCB })
 				);
 			});
 			return React.createElement(
@@ -85503,6 +84899,560 @@
 			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 		}
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	}
+
+/***/ },
+/* 300 */,
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(302), __esModule: true };
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(303);
+	module.exports = parseInt;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $     = __webpack_require__(304)
+	  , $def  = __webpack_require__(306)
+	  , abs   = Math.abs
+	  , floor = Math.floor
+	  , _isFinite = $.g.isFinite
+	  , MAX_SAFE_INTEGER = 0x1fffffffffffff; // pow(2, 53) - 1 == 9007199254740991;
+	function isInteger(it){
+	  return !$.isObject(it) && _isFinite(it) && floor(it) === it;
+	}
+	$def($def.S, 'Number', {
+	  // 20.1.2.1 Number.EPSILON
+	  EPSILON: Math.pow(2, -52),
+	  // 20.1.2.2 Number.isFinite(number)
+	  isFinite: function isFinite(it){
+	    return typeof it == 'number' && _isFinite(it);
+	  },
+	  // 20.1.2.3 Number.isInteger(number)
+	  isInteger: isInteger,
+	  // 20.1.2.4 Number.isNaN(number)
+	  isNaN: function isNaN(number){
+	    return number != number;
+	  },
+	  // 20.1.2.5 Number.isSafeInteger(number)
+	  isSafeInteger: function isSafeInteger(number){
+	    return isInteger(number) && abs(number) <= MAX_SAFE_INTEGER;
+	  },
+	  // 20.1.2.6 Number.MAX_SAFE_INTEGER
+	  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER,
+	  // 20.1.2.10 Number.MIN_SAFE_INTEGER
+	  MIN_SAFE_INTEGER: -MAX_SAFE_INTEGER,
+	  // 20.1.2.12 Number.parseFloat(string)
+	  parseFloat: parseFloat,
+	  // 20.1.2.13 Number.parseInt(string, radix)
+	  parseInt: parseInt
+	});
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var global = typeof self != 'undefined' ? self : Function('return this')()
+	  , core   = {}
+	  , defineProperty = Object.defineProperty
+	  , hasOwnProperty = {}.hasOwnProperty
+	  , ceil  = Math.ceil
+	  , floor = Math.floor
+	  , max   = Math.max
+	  , min   = Math.min;
+	// The engine works fine with descriptors? Thank's IE8 for his funny defineProperty.
+	var DESC = !!function(){
+	  try {
+	    return defineProperty({}, 'a', {get: function(){ return 2; }}).a == 2;
+	  } catch(e){ /* empty */ }
+	}();
+	var hide = createDefiner(1);
+	// 7.1.4 ToInteger
+	function toInteger(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	}
+	function desc(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	}
+	function simpleSet(object, key, value){
+	  object[key] = value;
+	  return object;
+	}
+	function createDefiner(bitmap){
+	  return DESC ? function(object, key, value){
+	    return $.setDesc(object, key, desc(bitmap, value));
+	  } : simpleSet;
+	}
+
+	function isObject(it){
+	  return it !== null && (typeof it == 'object' || typeof it == 'function');
+	}
+	function isFunction(it){
+	  return typeof it == 'function';
+	}
+	function assertDefined(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	}
+
+	var $ = module.exports = __webpack_require__(305)({
+	  g: global,
+	  core: core,
+	  html: global.document && document.documentElement,
+	  // http://jsperf.com/core-js-isobject
+	  isObject:   isObject,
+	  isFunction: isFunction,
+	  that: function(){
+	    return this;
+	  },
+	  // 7.1.4 ToInteger
+	  toInteger: toInteger,
+	  // 7.1.15 ToLength
+	  toLength: function(it){
+	    return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	  },
+	  toIndex: function(index, length){
+	    index = toInteger(index);
+	    return index < 0 ? max(index + length, 0) : min(index, length);
+	  },
+	  has: function(it, key){
+	    return hasOwnProperty.call(it, key);
+	  },
+	  create:     Object.create,
+	  getProto:   Object.getPrototypeOf,
+	  DESC:       DESC,
+	  desc:       desc,
+	  getDesc:    Object.getOwnPropertyDescriptor,
+	  setDesc:    defineProperty,
+	  setDescs:   Object.defineProperties,
+	  getKeys:    Object.keys,
+	  getNames:   Object.getOwnPropertyNames,
+	  getSymbols: Object.getOwnPropertySymbols,
+	  assertDefined: assertDefined,
+	  // Dummy, fix for not array-like ES3 string in es5 module
+	  ES5Object: Object,
+	  toObject: function(it){
+	    return $.ES5Object(assertDefined(it));
+	  },
+	  hide: hide,
+	  def: createDefiner(0),
+	  set: global.Symbol ? simpleSet : hide,
+	  each: [].forEach
+	});
+	/* eslint-disable no-undef */
+	if(typeof __e != 'undefined')__e = core;
+	if(typeof __g != 'undefined')__g = global;
+
+/***/ },
+/* 305 */
+/***/ function(module, exports) {
+
+	module.exports = function($){
+	  $.FW   = false;
+	  $.path = $.core;
+	  return $;
+	};
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $          = __webpack_require__(304)
+	  , global     = $.g
+	  , core       = $.core
+	  , isFunction = $.isFunction;
+	function ctx(fn, that){
+	  return function(){
+	    return fn.apply(that, arguments);
+	  };
+	}
+	// type bitmap
+	$def.F = 1;  // forced
+	$def.G = 2;  // global
+	$def.S = 4;  // static
+	$def.P = 8;  // proto
+	$def.B = 16; // bind
+	$def.W = 32; // wrap
+	function $def(type, name, source){
+	  var key, own, out, exp
+	    , isGlobal = type & $def.G
+	    , isProto  = type & $def.P
+	    , target   = isGlobal ? global : type & $def.S
+	        ? global[name] : (global[name] || {}).prototype
+	    , exports  = isGlobal ? core : core[name] || (core[name] = {});
+	  if(isGlobal)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !(type & $def.F) && target && key in target;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    if(isGlobal && !isFunction(target[key]))exp = source[key];
+	    // bind timers to global for call from export context
+	    else if(type & $def.B && own)exp = ctx(out, global);
+	    // wrap global constructors for prevent change them in library
+	    else if(type & $def.W && target[key] == out)!function(C){
+	      exp = function(param){
+	        return this instanceof C ? new C(param) : C(param);
+	      };
+	      exp.prototype = C.prototype;
+	    }(out);
+	    else exp = isProto && isFunction(out) ? ctx(Function.call, out) : out;
+	    // export
+	    exports[key] = exp;
+	    if(isProto)(exports.prototype || (exports.prototype = {}))[key] = out;
+	  }
+	}
+	module.exports = $def;
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 0.lib
+	'use strict';
+
+	var _Number$parseInt = __webpack_require__(301)['default'];
+
+	var _ = __webpack_require__(6);
+
+	// 0.ui
+	var Notification = __webpack_require__(18);
+
+	// 0.corss-state
+	var stateMenu = __webpack_require__(12);
+	var stateNotification = __webpack_require__(17);
+
+	// 1. main code
+	var Page = React.createClass({
+		displayName: 'Page',
+
+		getInitialState: function getInitialState() {
+			return {
+				input: '',
+				output: '',
+				type: 'escapeJS', // choices: escapeJS unescapeJS escapeHTML unescapeHTML encodeURL decodeURL encodeHexNCR decodeHexNCR encodeUnicode decodeUnicode encodeUTF8 decodeUTF8
+				show: false
+			};
+		},
+		mixins: [stateMenu, stateNotification],
+		render: function render() {
+			var state = this.state;
+			var classNameOfPage = state.show ? '' : ' remove';
+			return React.createElement(
+				'div',
+				{ className: classNameOfPage },
+				React.createElement(
+					'div',
+					{ className: 'Page__input' },
+					React.createElement(
+						'div',
+						{ className: 'fmSection' },
+						React.createElement('textarea', { cols: '30', rows: '2', placeholder: '请输入文本~', onChange: this.__handleInput, value: state.input })
+					),
+					React.createElement(
+						'div',
+						{ className: 'fmSection' },
+						React.createElement(
+							'div',
+							{ className: 'fmGroup fmGroup--hasHor' },
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'escapeJS'), checked: state.type == 'escapeJS' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' escape JS'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'unescapeJS'), checked: state.type == 'unescapeJS' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' unescape JS'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'escapeHTML'), checked: state.type == 'escapeHTML' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' escapeHTML'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'unescapeHTML'), checked: state.type == 'unescapeHTML' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' unescapeHTML'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'encodeURL'), checked: state.type == 'encodeURL' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' encodeURL'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'decodeURL'), checked: state.type == 'decodeURL' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' decodeURL'
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'fmGroup fmGroup--hasHor' },
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'encodeHexNCR'), checked: state.type == 'encodeHexNCR' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' encodeHexNCR'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'decodeHexNCR'), checked: state.type == 'decodeHexNCR' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' decodeHexNCR'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'encodeUnicode'), checked: state.type == 'encodeUnicode' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' encodeUnicode'
+							),
+							React.createElement(
+								'label',
+								{ className: 'fmGroup__item' },
+								React.createElement('input', { onChange: this.__handleSwitchType.bind(this, 'decodeUnicode'), checked: state.type == 'decodeUnicode' ? 'true' : '', type: 'radio', name: 'convertType' }),
+								' decodeUnicode'
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'fmGroup' },
+							React.createElement(
+								'div',
+								{ className: 'fkBtn', onClick: this.__handleCopy },
+								'复制结果'
+							)
+						)
+					),
+					React.createElement('div', { className: 'fmSection' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'Page__output' },
+					React.createElement('textarea', { cols: '30', rows: '2', onChange: this.__handleOutput, value: state.output })
+				)
+			);
+		},
+		__stateMenuListener: function __stateMenuListener() {
+			var state = this.state;
+			if (this.getStateMenu('active') === this.props.url) {
+				state.show = true;
+			} else {
+				state.show = false;
+			}
+			this.setState(state);
+		},
+		__handleCopy: function __handleCopy() {
+			executeCopy(this.state.output);
+			this.setStateNotification('msg', '代码已复制');
+		},
+		__handleInput: function __handleInput(e) {
+			this.state['input'] = e.target.value;
+			this.state['output'] = getOutput(this.state['input'], this.state['type']);
+			this.setState(this.state);
+		},
+		__handleOutput: function __handleOutput() {
+			this.state['output'] = e.target.value;
+			this.setState(this.state);
+		},
+		__handleSwitchType: function __handleSwitchType(type) {
+			this.state['type'] = type;
+			this.state['output'] = getOutput(this.state['input'], this.state['type']);
+			this.setState(this.state);
+		}
+	});
+
+	module.exports = Page;
+
+	// 2. utils
+	function executeCopy(text) {
+		var input = document.createElement('textarea');
+		var ref = document.getElementsByTagName('div')[0];
+		document.body.insertBefore(input, ref);
+		input.value = text;
+		input.focus();
+		input.select();
+		document.execCommand('Copy');
+		input.remove();
+	}
+	function getOutput(input, type) {
+		switch (type) {
+			case 'escapeJS':
+				return escapeJS(input);
+			case 'unescapeJS':
+				return unescapeJS(input);
+			case 'escapeHTML':
+				return escapeHTML(input);
+			case 'unescapeHTML':
+				return unescapeHTML(input);
+			case 'encodeURL':
+				return encodeURL(input);
+			case 'decodeURL':
+				return decodeURL(input);
+			case 'encodeHexNCR':
+				return encodeHexNCR(input);
+			case 'decodeHexNCR':
+				return decodeHexNCR(input);
+			case 'encodeUnicode':
+				return encodeUnicode(input);
+			case 'decodeUnicode':
+				return decodeUnicode(input);
+		}
+	}
+
+	// https://github.com/joliss/js-string-escape
+	function escapeJS(str) {
+		str = str2unicode(str);
+		return ('' + str).replace(/\\u[\w\d]{4}|["'\\\n\r\u2028\u2029]/g, function (char) {
+			switch (char) {
+				case '"':
+				case '\'':
+				case '\\':
+					return '\\' + char;
+				// case '\u': return '\\u'
+				case '\n':
+					return '\\n';
+				case '\r':
+					return '\\r';
+				case '\u2028':
+					return '\\u2028';
+				case '\u2029':
+					return '\\u2029';
+				default:
+					return char;
+			}
+		});
+		function str2unicode(str) {
+			var result = '',
+			    hex,
+			    i;
+			for (i = 0; i < str.length; i++) {
+				hex = str.charCodeAt(i).toString(16);
+				hex = ('000' + hex).slice(-4);
+				if (hex < '007f' && hex > '0019') {
+					hex = str[i];
+				} else {
+					hex = '\\u' + hex;
+				}
+				result += hex;
+			}
+			return result;
+		}
+	}
+
+	function unescapeJS(str) {
+		return ('' + str).replace(/\\u[\w\d]{4}|\\"|\\'|\\\\|\\n|\\r|\\u2028|\\u2029/g, function (char) {
+			switch (char) {
+				case '\\"':
+					return '"';
+				case '\\\'':
+					return '\'';
+				case '\\\\':
+					return '\\';
+				case '\\n':
+					return '\n';
+				case '\\r':
+					return '\r';
+				case '\\u2028':
+					return '\u2028';
+				case '\\u2029':
+					return '\u2029';
+				default:
+					return unicode2str(char);
+			}
+		});
+		function unicode2str(code) {
+			var hex = code.slice(-4);
+			var decimal = _Number$parseInt(hex, 16);
+			return String.fromCharCode(decimal);
+		}
+	}
+
+	function escapeHTML(str) {
+		return _.escape(str);
+	}
+
+	function unescapeHTML(str) {
+		return _.unescape(str);
+	}
+
+	function encodeURL(str) {
+		return encodeURIComponent(str);
+	}
+
+	function decodeURL(str) {
+		return decodeURIComponent(str);
+	}
+
+	function encodeHexNCR(str) {
+		var result = __toHexArray(str);
+		return result.map(function (e) {
+			return '&#x' + e + ';';
+		}).join('');
+	}
+
+	function decodeHexNCR(hexNCR) {
+		return ('' + hexNCR).replace(/&#x[\w\d]{4};/g, function (item) {
+			var decimal = _Number$parseInt(item.substr(3, 4), 16);
+			return String.fromCharCode(decimal);
+		});
+	}
+
+	function encodeUnicode(str) {
+		return __toHexArray(str).map(function (item) {
+			return '\\u' + item;
+		}).join('');
+	}
+	function decodeUnicode(str) {
+		return ('' + str).replace(/\\u[\w\d]{4}/g, function (item) {
+			var decimal = _Number$parseInt(item.slice(-4), 16);
+			return String.fromCharCode(decimal);
+		});
+	}
+	function encodeUTF8(str) {}
+	function decodeUTF8(str) {}
+
+	function __toHexArray(str) {
+		var result = [],
+		    hex,
+		    i;
+		for (i = 0; i < str.length; i++) {
+			hex = str.charCodeAt(i).toString(16);
+			result.push(('000' + hex).slice(-4));
+		}
+		return result;
+	}
+
+	function __toDecimalArray(str) {
+		var result = [],
+		    hex,
+		    i;
+		for (i = 0; i < str.length; i++) {
+			hex = str.charCodeAt(i).toString(10);
+			result.push(('000' + hex).slice(-4));
+		}
+		return result;
 	}
 
 /***/ }

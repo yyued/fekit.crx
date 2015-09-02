@@ -60,40 +60,6 @@ var FileZone = React.createClass({
 
 module.exports = FileZone
 
-// function dragAndBrowser(el, handleFiles){
-//     var $el = $(el)
-//     var $file = $('<input type="file" style="display: none" accept="image/*" />')
-//     $file.insertAfter($el)
-
-//     $el.on('dblclick', function(e){
-//         $file.trigger('click')
-//         e.preventDefault()
-//     })
-//     $file.on('change', function (e) {
-//         handleFiles(this.files)
-//     })
-
-//     $el.on('dragenter', dragenter)
-//     $el.on('dragover', dragover)
-//     $el.on('drop', drop)
-
-//     function dragenter(e) {
-//         e.stopPropagation()
-//         e.preventDefault()
-//     }
-//     function dragover(e) {
-//         e.stopPropagation()
-//         e.preventDefault()
-//     }
-//     function drop(e) {
-//         e.stopPropagation()
-//         e.preventDefault()
-
-//         var files = e.originalEvent.dataTransfer.files
-//         handleFiles(files)
-//     }
-// }
-
 
 
 

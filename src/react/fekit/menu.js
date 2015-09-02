@@ -13,7 +13,7 @@ var Menu = React.createClass({
 		if (ENV_RELEASE) {
 			chrome.runtime.onMessage.addListener(function(req, sender, resp){
 				var url = req.route
-				window.__defaultURL = url
+				// window.__defaultURL = url
 				this.state.active = url
 				this.setState(this.state)
 				this.setStateMenu('active', url)
