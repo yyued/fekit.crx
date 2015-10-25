@@ -13,8 +13,8 @@ require('../../node_modules/react-ace/node_modules/brace/mode/css')
 require('../../node_modules/react-ace/node_modules/brace/mode/javascript')
 require('../../node_modules/react-ace/node_modules/brace/mode/json')
 // @see http://ace.c9.io/build/kitchen-sink.html
-// require('../../node_modules/react-ace/node_modules/brace/theme/github')
-require('../../node_modules/react-ace/node_modules/brace/theme/idle_fingers')
+require('../../node_modules/react-ace/node_modules/brace/theme/xcode')
+// require('../../node_modules/react-ace/node_modules/brace/theme/idle_fingers')
 
 var Beautify = require('../../node_modules/js-beautify/js/index')
 var UglifyJS = require('uglifyJs')
@@ -58,12 +58,12 @@ var Page = React.createClass({
 					</div>
 				</div>
 				<div onClick={this.__handleFocus}>
-				<AceEditor ref="editor1" mode={state.lang} theme="idle_fingers" onChange={this.__handleChange} value={state.input} width="800" height="100" name="UNIQUE_ID1" />
+				<AceEditor ref="editor1" mode={state.lang} theme="xcode" onChange={this.__handleChange} value={state.input} width="860" height="100" name="UNIQUE_ID1" />
 				</div>
 			</div>
 			<div className="Page__output">
 				<div onClick={this.__handleFocus2}>	
-				<AceEditor ref="editor2" mode={state.lang} theme="idle_fingers" onChange={this.__handleChange2} value={this.state.output} width="800" height="400" name="UNIQUE_ID2" />
+				<AceEditor ref="editor2" mode={state.lang} theme="xcode" onChange={this.__handleChange2} value={this.state.output} width="860" height="400" name="UNIQUE_ID2" />
 				</div>
 			</div>
 			</div>
@@ -117,13 +117,8 @@ var Page = React.createClass({
 		}
 		readFileAsText(file, (fileContent)=>{
 			var state = this.state
-			if (state.isDoMinify) {
-				state.output = fileContent
-				state.input = getMinifyCode.call(this, state.output, state.lang)
-			}else{
-				state.input = fileContent
-				state.output = getBeautifyCode(state.input, state.lang)
-			}
+			state.input = getMinifyCode.call(this, fileContent, state.lang)
+			state.output = getBeautifyCode(fileContent, state.lang)
 			this.setState(state)
 		}.bind(this))
 		

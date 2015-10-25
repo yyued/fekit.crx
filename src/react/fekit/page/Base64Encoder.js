@@ -13,7 +13,7 @@ var stateNotification = require('../utils/stateNotification')
 var Page = React.createClass({
 	getInitialState: function () {
 	    return {
-	        input:'http://art.yypm.com/120x120',
+	        input:'https://placehold.it/150x150',
 	        output: '',
 	        show: false
 	    }

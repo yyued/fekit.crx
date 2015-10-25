@@ -61,7 +61,6 @@ var Page = React.createClass({
 		this.setState(this.state)
 	},
 	__handleJumpPage: function(route){
-		// console.log(route)
 		// 1. createOrFocus the-target-tab
 		// 2. rendMessage to the-target-tab
 		chrome.tabs.query({currentWindow: true, title:'前端工具盒子', url: 'chrome-extension://*/*'}, function(tabs){

@@ -3,7 +3,7 @@
 
     "name": "fekit",
     "description": "f2e toolkit",
-    "version": "0.1.2",
+    "version": "0.1.3",
 
     "permissions": [
         "tabs",

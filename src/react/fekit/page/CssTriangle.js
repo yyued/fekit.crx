@@ -18,7 +18,7 @@ var Page = React.createClass({
 	        inputBorder: 10,
 	        inputDirect: 'top',
 	        inputFG: '#234',
-	        inputBG: '#FAFBFC',
+	        inputBG: '#e8eaed',
 	        output: '',
 	        show: false
 	    }
